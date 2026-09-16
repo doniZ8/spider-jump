@@ -7,9 +7,11 @@ function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2)
 
 const CFG={gravity:1850,move:480,jump:-790,jump2:-740,gap:96,maxPlatforms:44};
 const state={running:false,over:false,life:false,last:0,acc:0,score:0,coins:0,lives:0,jumps:0,triple:false,jetpack:false,cameraY:0,targetCameraY:0,highestPlatform:0,shake:0,sound:true,zone:0,boss:null,bossHp:0,bossMax:0,bannerTimer:0};
-const saveKey="spiderJumpSaveULTRA";
-const save=JSON.parse(localStorage.getItem(saveKey)||"{}");
-state.coins=save.coins||0;state.triple=!!save.triple;state.lives=save.lives||0;state.sound=save.sound!==false;
+const saveData=JSON.parse(localStorage.getItem(saveKey)||"{}");
+state.coins=saveData.coins||0;
+state.triple=!!saveData.triple;
+state.lives=saveData.lives||0;
+state.sound=saveData.sound!==false;
 
 const player={x:W*.5,y:0,vx:0,vy:0,w:46,h:68,onGround:false,web:0};
 let platforms=[],particles=[],stars=[],audioCtx=null;
