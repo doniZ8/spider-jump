@@ -7,6 +7,7 @@ function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2)
 
 const CFG={gravity:1850,move:480,jump:-790,jump2:-740,gap:96,maxPlatforms:44};
 const state={running:false,over:false,life:false,last:0,acc:0,score:0,coins:0,lives:0,jumps:0,triple:false,jetpack:false,cameraY:0,targetCameraY:0,highestPlatform:0,shake:0,sound:true,zone:0,boss:null,bossHp:0,bossMax:0,bannerTimer:0};
+const saveKey="spiderJumpSaveULTRA";
 const saveData=JSON.parse(localStorage.getItem(saveKey)||"{}");
 state.coins=saveData.coins||0;
 state.triple=!!saveData.triple;
