@@ -73,7 +73,11 @@ function land(prev){
  if(player.vy<=0)return;
  const b=player.y+player.h,pb=prev+player.h;
  for(const p of platforms)if(b>=p.y&&pb<=p.y&&player.x+player.w*.82>p.x&&player.x+player.w*.18<p.x+p.w){
-  player.y=p.y-player.h;player.vy=CFG.jump;player.onGround=true;state.jumps=0;spawn(player.x+23,p.y,9,"dust");sound("hit");
+  player.y=p.y-player.h;
+player.vy=0;
+player.onGround=true;
+state.jumps=0;
+  spawn(player.x+23,p.y,9,"dust");sound("hit");
   if(p.index>state.highestPlatform){
    const old=state.highestPlatform;state.highestPlatform=p.index;state.score=p.index;
    const before=Math.floor(old/5),after=Math.floor(p.index/5);if(after>before){state.coins+=5*(after-before);sound("coin")}
@@ -102,7 +106,15 @@ function continueLife(){
 $("continueBtn").onclick=continueLife;$("endLifeBtn").onclick=endGame;
 
 function buy(t){
- if(t==="jet"&&state.coins>=50){state.coins-=50;player.vy=-1050;state.jetpack=true;state.targetCameraY=player.y-H*.45;spawn(player.x+23,player.y+player.h,25,"flame");sound("boss")}
+ if(t==="jet"&&state.coins>=50&&!state.jetpack){
+  state.coins-=50;
+  state.jetpack=true;
+  state.jetpackUntil=state.highestPlatform+50;
+  player.vy=-900;
+  state.targetCameraY=player.y-H*.45;
+  spawn(player.x+23,player.y+player.h,25,"flame");
+  sound("boss");
+}
  if(t==="triple"&&state.coins>=25&&!state.triple){state.coins-=25;state.triple=true;sound("coin")}
  if(t==="life"&&state.coins>=200){state.coins-=200;state.lives++;sound("coin")}
  save();updateHud()
