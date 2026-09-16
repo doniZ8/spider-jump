@@ -100,3 +100,5 @@ button:disabled{opacity:.43;cursor:not-allowed}
   .profile-stats{grid-template-columns:1fr 1fr}.achievements{grid-template-columns:1fr}
   .name-row{flex-direction:column}
 }
+
+@media (pointer: coarse){#game{touch-action:none;}}
