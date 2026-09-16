@@ -1,58 +1,65 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Spider Jump</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Spider Jump — Infinite</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="game"></canvas>
+  <canvas id="game"></canvas>
 
-<div id="hud">
-  <div class="stat">🏆 Платформы: <b id="score">0</b></div>
-  <div class="stat">🪙 Монеты: <b id="coins">0</b></div>
-  <div class="stat">❤️ Жизни: <b id="lives">0</b></div>
-</div>
-
-<aside id="shop">
-  <div class="shop-title">🛒 БУСТЫ</div>
-  <button class="boost" id="jetpackBtn"><span class="icon">🚀</span><b>Джетпак</b><small>+50 платформ</small><strong>🪙 50</strong></button>
-  <button class="boost" id="tripleBtn"><span class="icon">🕷️</span><b>Тройной прыжок</b><small>3 прыжка подряд</small><strong>🪙 25</strong></button>
-  <button class="boost" id="lifeBtn"><span class="icon">❤️</span><b>Доп. жизнь</b><small>Продолжить после падения</small><strong>🪙 200</strong></button>
-  <div id="shopMessage"></div>
-</aside>
-
-<div id="mobileControls"><button id="leftBtn">◀</button><button id="rightBtn">▶</button></div>
-
-<div id="startScreen" class="overlay">
-  <div class="panel">
-    <h1>🕷️ Spider Jump</h1>
-    <p>Прыгай по платформам и поднимайся всё выше.</p>
-    <p><b>A / D</b> — движение · <b>ЛКМ / Space</b> — прыжок</p>
-    <p>Каждые 5 платформ дают <b>+5 🪙</b>.</p>
-    <button id="startBtn" class="main-btn">Начать игру</button>
+  <div id="hud">
+    <div class="stat">🏆 <b id="score">0</b></div>
+    <div class="stat">🪙 <b id="coins">0</b></div>
+    <div class="stat">❤️ <b id="lives">0</b></div>
+    <div class="stat biome" id="biome">JUNGLE</div>
+    <button id="soundBtn" class="sound" aria-label="Звук">🔊</button>
   </div>
-</div>
 
-<div id="gameOverScreen" class="overlay hidden">
-  <div class="panel">
-    <h1>💀 Игра окончена</h1>
-    <p>Результат: <b id="finalScore">0</b> платформ</p>
-    <p>Монеты: <b id="finalCoins">0</b></p>
-    <button id="restartBtn" class="main-btn">Сыграть ещё</button>
-  </div>
-</div>
+  <aside id="shop">
+    <div class="shop-title"><span>⚡</span><div><b>ЛАВКА</b><small>Бусты сохраняются</small></div></div>
+    <button id="jetpackBtn" class="boost"><span class="icon">🚀</span><span><b>ДЖЕТПАК</b><small>+50 платформ · 50 🪙</small></span><i>→</i></button>
+    <button id="tripleBtn" class="boost"><span class="icon">✦</span><span><b>ТРОЙНОЙ ПРЫЖОК</b><small>3 прыжка · 25 🪙</small></span><i>→</i></button>
+    <button id="lifeBtn" class="boost"><span class="icon">❤</span><span><b>ВТОРАЯ ЖИЗНЬ</b><small>1 продолжение · 200 🪙</small></span><i>→</i></button>
+    <div class="shop-note" id="shopNote">Покупки сохраняются на этом устройстве.</div>
+    <div class="inventory" id="inventory"></div>
+  </aside>
 
-<div id="lifeScreen" class="overlay hidden">
-  <div class="panel">
-    <h1>❤️ Ты упал!</h1>
-    <p>У тебя есть дополнительная жизнь.</p>
-    <button id="useLifeBtn" class="main-btn">Продолжить</button>
-    <button id="endBtn" class="secondary-btn">Закончить игру</button>
-  </div>
-</div>
+  <div id="mobileControls"><button id="leftBtn">◀</button><button id="rightBtn">▶</button></div>
 
-<script src="game.js"></script>
+  <section id="startOverlay" class="overlay">
+    <div class="panel hero-panel">
+      <div class="logo">SPIDER <span>JUMP</span></div>
+      <p>Бесконечный вертикальный забег</p>
+      <div class="controls">A / D или стрелки — движение · ЛКМ / Space — прыжок<br>Паутина, частицы и звук включены</div>
+      <button id="startBtn" class="primary">НАЧАТЬ ИГРУ</button>
+    </div>
+  </section>
+
+  <section id="gameOverOverlay" class="overlay hidden">
+    <div class="panel">
+      <h2>ЗАБЕГ ОКОНЧЕН</h2>
+      <div class="result" id="finalResult"></div>
+      <div id="leaderboard" class="leaderboard"></div>
+      <div class="leaderboard-form">
+        <input id="nameInput" maxlength="16" placeholder="Ваше имя">
+        <button id="submitScore" class="primary">СОХРАНИТЬ РЕЗУЛЬТАТ</button>
+      </div>
+      <button id="restartBtn" class="secondary">СЫГРАТЬ ЕЩЁ</button>
+    </div>
+  </section>
+
+  <section id="lifeOverlay" class="overlay hidden">
+    <div class="panel">
+      <h2>ПОСЛЕДНИЙ ШАНС</h2>
+      <p>Вторая жизнь вернёт тебя на ближайшую безопасную платформу.</p>
+      <button id="continueBtn" class="primary">ПРОДОЛЖИТЬ</button>
+      <button id="endLifeBtn" class="secondary">ЗАКОНЧИТЬ ИГРУ</button>
+    </div>
+  </section>
+
+  <script src="config.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>
