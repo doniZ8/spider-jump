@@ -1,5 +1,0 @@
-<!-- ЗАМЕНИ старый блок с количеством монет на этот -->
-<span class="coin-display">
-  <span class="coin-icon" aria-hidden="true"></span>
-  <span id="coins">0</span>
-</span>
